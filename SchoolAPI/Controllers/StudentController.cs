@@ -28,12 +28,12 @@ namespace SchoolAPI.Controllers
         {
             return await _student.PostStudent(this, request);
         }
-        [HttpPatch]
-        public async Task<IActionResult> PatchStudent([FromBody] StudentRequest request)
+        [HttpPatch("{studentId}")]
+        public async Task<IActionResult> PatchStudent(int studentId,[FromBody] StudentRequest request)
         {
-            return await _student.EditStudent(this, request);
+            return await _student.EditStudent(this, studentId, request);
         }
-        [HttpDelete("studentId")]
+        [HttpDelete("{studentId}")]
         public async Task<IActionResult> DeleteStudent(int studentId)
         {
             return await _student.DeleteStudent(this, studentId);

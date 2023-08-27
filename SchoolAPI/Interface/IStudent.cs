@@ -8,8 +8,7 @@ namespace SchoolAPI.Interface
         Task<IActionResult> GetStudents(ControllerBase controller);
         Task<IActionResult> GetStudent(ControllerBase controller, int studentId);
         Task<IActionResult> PostStudent(ControllerBase controller, StudentRequest request);
-        Task<IActionResult> EditStudent(ControllerBase controller, StudentRequest request);
+        Task<IActionResult> EditStudent(ControllerBase controller, int studentId, StudentRequest request);
         Task<IActionResult> DeleteStudent(ControllerBase controller, int studentsId);
-
     }
 }
