@@ -1,0 +1,11 @@
+﻿namespace SchoolAPI.Requests
+{
+    public class StudentRequest
+    {
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public double Grade { get; set; }
+    }
+}
