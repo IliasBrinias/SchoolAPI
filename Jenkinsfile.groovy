@@ -1,43 +1,42 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Build') {
             steps {
-                // You can add build commands specific to your project here
-                sh 'mvn clean install' // Replace with your build command(s)
-            }
-            post {
-                success {
-                    echo 'Build successful'
-                    // You can add further actions to perform on build success
-                }
-                failure {
-                    echo 'Build failed'
-                    // You can add further actions to perform on build failure
+                // Clean the workspace before building
+                cleanWs()
+                
+                // Set the .NET Core SDK version if necessary
+                env.SDK_VERSION = '7.0'  // Uncomment and set the version
+
+                // Restore dependencies and build the .NET project
+                script {
+                    def dotnetCli = bat(script: "dotnet --version", returnStatus: true)
+                    if (dotnetCli != 0) {
+                        error "dotnet CLI is not installed or not in PATH"
+                    }
+
+                    // Use the SDK version if specified
+                    // if (env.SDK_VERSION) {
+                    //     bat "dotnet --version ${env.SDK_VERSION}"
+                    // }
+
+                    bat "dotnet restore"
+                    bat "dotnet build"
                 }
             }
         }
-        
-        // Add more stages as needed for your pipeline
-        // stage('Test') {
-        //     steps {
-        //         // Add test commands here
-        //     }
-        // }
-        
-        // stage('Deploy') {
-        //     steps {
-        //         // Add deployment commands here
-        //     }
-        // }
+
+        // Add more stages for testing, deployment, etc. as needed
     }
-    
-    // Add post-build actions or notifications here
+
     post {
-        always {
-            // This block will always run, regardless of build success or failure
-            // You can add cleanup or notification actions here
+        success {
+            // Add post-build actions if needed
+        }
+        failure {
+            // Add actions to perform on build failure
         }
     }
 }
